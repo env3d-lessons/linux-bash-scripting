@@ -98,7 +98,7 @@ cp /home/jmadar/.profile ${HOME}
 
 # Question 1
 
-Follow the instructions above but rename the file to **q1.sh**.
+Follow the instructions above but rename the file to **`q1.sh`**.
 
 # Question 2
 
@@ -118,7 +118,9 @@ Turns out one of the directory is 61-dog/:
 Your goal is to write a script to output the URL to all the dog.jpg locations
 under https://learn.operatoroverload.com/~jmadar/dogs/
 
-a. Write a bash one-liner to extract all the directory names 
+<ol type="a">
+
+<li> Write a bash one-liner to extract all the directory names 
 Hint: you will need to combine **curl**, **grep**, and **regex**
 to accomplish this.
 
@@ -129,13 +131,18 @@ one-liner, and added a head command so the output would fit the screenshot.
 Your one-liner will NOT include the head command.
 
 **Put this one-liner in a file called `q2a.txt`**
+</li>
 
-b. Incorporate your one liner into a script call *dog_image.sh* that outputs
+<li>
+Incorporate your one liner into a script call *dog_image.sh* that outputs
 to stdout the urls all directories with images, as follows:
 
 ![Dog images url](images/image9.png)
 
 **Call this script `q2.sh`**
+</li>
+
+</ol>
 
 ## HINTS
 
@@ -159,3 +166,9 @@ fi
 ```
 
 # Question 3
+
+Regex is great because of the ability to extract information from unstructured sources
+(instead of relying on delimiters). To demonstrate, write a script that extracts all
+thumbnail images from a particular subreddit.
+
+
