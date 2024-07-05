@@ -5,7 +5,7 @@ Watch Chapter 2 and 3: https://www.linkedin.com/learning/learning-bash-scripting
 Let’s say if I want to download all the images from the langara website that we retrieved
 from the previous section, we can run the wget command  on every file above, like this: 
 
-![wget example](images/intro1.gif)
+![wget example](images/intro2.gif)
 
 I got tired typing after 2 downloads, lol.
 
@@ -67,7 +67,7 @@ done
 We then change the permission of the file so it is executable by Linux,
 finally we can run it on the command line:
 
-![running script directly](images/intro2.gif)
+![running script directly](images/intro1.gif)
 
 Notice that we have to provide the path to the current directory when calling the script
 file.
