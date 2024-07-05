@@ -121,7 +121,7 @@ under https://learn.operatoroverload.com/~jmadar/dogs/
 <ol type="a">
 
 <li> Write a bash one-liner to extract all the directory names 
-Hint: you will need to combine **curl**, **grep**, and **regex**
+Hint: you will need to combine curl, grep, and regex
 to accomplish this.
 
 ![Dog output](images/image5.png)
@@ -233,7 +233,7 @@ password is randomly chosen from the first 100 lines in this file:
 https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Common-Credentials/10k-most-common.txt 
 
 Write a script **`brute_force.sh`** that extracts the message enclosed inside the
-<h1> tag from the password protected page and outputs it to stdout.  The
+&lt;h1%gt; tag from the password protected page and outputs it to stdout.  The
 script will accomplish this by trying the 100 potential passwords, one at a time.  
 
 ![brute force password hacking](images/image7.gif)
