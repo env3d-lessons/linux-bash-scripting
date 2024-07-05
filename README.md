@@ -72,16 +72,12 @@ finally we can run it on the command line:
 Notice that we have to provide the path to the current directory when calling the script
 file.
 
-# Question 1
-
-Follow the instructions above and complete the **download.sh** file.
-
 # Notes
 
 1. Use the -P option of grep if you want to use the standard regex that you learned last week.
 i.e.
 
-![grep -P](images/image1.gif)
+![grep -P](images/image6.png)
 
 2. If you would like to have syntax highlighting on your bash terminal, copy the following 2
 files from my home directory to yours, then exit and re-login:
@@ -100,10 +96,66 @@ cp /home/jmadar/.profile ${HOME}
   ./${script_filename}
   ```
 
+# Question 1
 
+Follow the instructions above but rename the file to **q1.sh**.
 
+# Question 2
 
+In data gathering, sometimes we need to extract information from web pages,
+directory listings, etc.
 
+Visit https://learn.operatoroverload.com/~jmadar/dogs/ 
 
+Some of the items have names like XXX-dog while others are dog-XXX (where XXX is a number).  
 
+Some directories have actual dog images in them, but most don’t.  In the animated gif below,
+I tried to click on each of the directories to find a directory containing the file dog.jpg.
+Turns out one of the directory is 61-dog/:
 
+![dog images](images/image2.gif)
+
+Your goal is to write a script to output the URL to all the dog.jpg locations
+under https://learn.operatoroverload.com/~jmadar/dogs/
+
+a. Write a bash one-liner to extract all the directory names 
+Hint: you will need to combine **curl**, **grep**, and **regex**
+to accomplish this.
+
+![Dog output](images/image5.png)
+
+NOTE: In the above screenshot, I have blurred out the important part of the
+one-liner, and added a head command so the output would fit the screenshot.
+Your one-liner will NOT include the head command.
+
+**Put this one-liner in a file called `q2a.txt`**
+
+b. Incorporate your one liner into a script call *dog_image.sh* that outputs
+to stdout the urls all directories with images, as follows:
+
+![Dog images url](images/image9.png)
+
+**Call this script `q2.sh`**
+
+## HINTS
+
+Since there are no inputs, you don’t have to do any error checking on the input.
+You can also assume that the url http://learn.operatoroverload.com/~jmadar/dogs/
+will always be available. 
+
+If you are trying to figure out how to check if a file exists on a web server
+using curl, here's an article that may help:
+https://matthewsetter.com/check-if-file-is-available-with-curl/
+
+Below is a code snippet that outputs 'ok' if a particular webpage exists on
+langara.ca using the technique described in the above article
+
+```
+CODE=$(curl -o /dev/null --silent -Iw '%{http_code}' https://langara.ca/programs-and-courses/index.html)
+if [[ $CODE == '200' ]]
+then
+    echo 'ok'
+fi
+```
+
+# Question 3
