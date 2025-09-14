@@ -1,29 +1,67 @@
-# Linux Bash Scripting
+# Pre-reading
 
-Watch Chapter 2 and 3: https://www.linkedin.com/learning/learning-bash-scripting-26210777 
+  + https://www.linkedin.com/learning/learning-linux-command-line-26594217/search-for-text-in-files-and-streams-with-grep 
 
-Let’s say if I want to download all the images from the langara website that we retrieved
-from the previous section, we can run the wget command  on every file above, like this: 
+  + https://www.linkedin.com/learning/learning-linux-command-line-26594217/manipulate-text-with-awk-sed-and-sort 
 
-![wget example](images/intro2.gif)
+  + Chapters 2 and 3: https://www.linkedin.com/learning/learning-bash-scripting-26210777 
 
-I got tired typing after 2 downloads, lol.
+# Linux Bash Scripting 
 
-There is a better way, basically we want to run the command:
+Let's say I want to output all the jpg images from the Capilano University website, I could
+use the following one-liner with a combination of curl and grep, as follows:
 
 ```
-curl -s https://langara.ca | grep -o -E '/_files.*jpg'
+# Download the homepage HTML (-s for silent), extract all .jpg image paths with grep, and sort them uniquely
+curl -s https://www.capilanou.ca | grep -o -E '/media.*jpg' | sort -u
 ```
 
-We store the output into an array variable, then we want to run wget on every item of the array.
-This is how we can do it via a shell script, a program that uses shell commands.
+Below is the sample output from the shell:
+
+```shell
+$ curl -s https://www.capilanou.ca | grep -o -E '/media.*jpg' | sort -u
+/media/capilanouca/about-capu/get-to-know-us/capsule-stories/images/CapU-Student-First-Week-feature-image-1-800x495.jpg
+/media/capilanouca/about-capu/get-to-know-us/capsule-stories/images/CapU-Student-First-Week-feature-image-500x309.jpg
+/media/capilanouca/about-capu/get-to-know-us/capsule-stories/images/North-Shore-feature-image-1-800x495.jpg
+/media/capilanouca/about-capu/get-to-know-us/capsule-stories/images/North-Shore-feature-image-500x309.jpg
+/media/capilanouca/about-capu/get-to-know-us/capsule-stories/images/Sarah-Buchanan-feature-image-1-800x495.jpg
+/media/capilanouca/about-capu/get-to-know-us/capsule-stories/images/Sarah-Buchanan-feature-image-500x309.jpg
+/media/capilanouca/about-capu/get-to-know-us/capsule-stories/images/The-Mace-feature-image-1-800x495.jpg
+/media/capilanouca/about-capu/get-to-know-us/capsule-stories/images/The-Mace-feature-image-500x309.jpg
+/media/capilanouca/about-capu/get-to-know-us/capsule-stories/images/capu-in-focus-feature-photo-1-800x495.jpg
+/media/capilanouca/about-capu/get-to-know-us/capsule-stories/images/capu-in-focus-feature-photo-500x309.jpg
+/media/capilanouca/about-capu/get-to-know-us/events/university-events/2024.10.15_Learning-Support_13.jpg
+/media/capilanouca/about-capu/get-to-know-us/events/university-events/2025.3.6_MDX-Student-Lifestyle_121_Event_page_Main_image_800x495.jpg
+/media/capilanouca/about-capu/get-to-know-us/events/university-events/Consent-Coffee-Chat-image.jpg
+/media/capilanouca/images/explore-degrees/Business-and-Professional-Studies-feature.jpg
+/media/capilanouca/images/explore-degrees/Education-Health-and-Human-Development-feature.jpg
+/media/capilanouca/images/explore-degrees/Global-and-Community-Studies-feature.jpg
+/media/capilanouca/images/homepage-hero/homepage-hero-September-2024.jpg
+/media/capilanouca/programs-amp-courses/search-amp-select/program-profiles/idea-instructor-painting.jpg
+```
+
+Now let's download every single image from the above, we can use the `wget` command, as follows:
+
+```
+wget https://www.capilanou.ca/media/capilanouca/about-capu/get-to-know-us/capsule-stories/images/CapU-Student-First-Week-feature-image-1-800x495.jpg
+wget /media/capilanouca/about-capu/get-to-know-us/capsule-stories/images/CapU-Student-First-Week-feature-image-500x309.jpg
+# ... do the above for each of the url above
+```
+
+I don't know about you, but I would get tired typing after 2 downloads, lol.
+
+There is a better way, logically, we want to store the output of the first command 
+into an list, then run wget on each of the item on the list, appending `https://www.capilanou.ca/`
+to the beginning. 
+
+We do it via a shell script, a program that uses shell commands.
 Here is the code:
 
-```
+```bash
 # Stores the output into the array call FILES
 # NOTE: we use command substitution $( ) to capture the 
 # output of a command into a variable
-FILES=$(curl -s https://langara.ca | grep -o -E '/_files.*jpg')
+FILES=$(curl -s https://www.capilanou.ca | grep -o -E '/media.*jpg')
 
 # Loop over the FILES array.  In bash, assigning we need
 # to prefix a variable with the $ sign to access its content
@@ -31,7 +69,7 @@ for F in $FILES
 do
     # we are inside the loop, and we can now run wget on
     # the $F variable.  Noticed the use of variable expansion ${}
-    wget https://langara.ca${F}
+    wget https://www.capilanou.ca${F}
 done
 ```
 
@@ -52,7 +90,7 @@ This is generally called the **shebang** line:
 # Stores the output into the array call FILES
 # NOTE: we use command substitution $( ) to capture the 
 # output of a command into a variable
-FILES=$(curl -s https://langara.ca | grep -o -E '/_files.*jpg')
+FILES=$(curl -s https://www.capilanou.ca | grep -o -E '/media.*jpg')
 
 # Loop over the FILES array.  In bash, assigning we need
 # to prefix a variable with the $ sign to access its content
@@ -60,14 +98,23 @@ for F in $FILES
 do
     # we are inside the loop, and we can now run wget on
     # the $F variable.  Noticed the use of variable expansion ${}
-    wget https://langara.ca${F}
+    wget https://www.capilanou.ca${F}
 done
 ```
 
 We then change the permission of the file so it is executable by Linux,
 finally we can run it on the command line:
 
-![running script directly](images/intro1.gif)
+```shell
+$ chmod +x download.sh
+```
+
+Then you can run the script with the following directly in the shell as follows:
+
+```shell
+$ ./download.sh
+```
+
 
 Notice that we have to provide the path to the current directory when calling the script
 file.
@@ -83,8 +130,7 @@ i.e.
 files from my home directory to yours, then exit and re-login:
 
 ```
-cp /home/jmadar/.bashrc ${HOME}
-cp /home/jmadar/.profile ${HOME}
+cp /home/env3d/{.bashrc,.profile} ${HOME}
 ```
 
 3. A reminder that to make your script file executable, you need to do the following:
@@ -154,11 +200,11 @@ If you are trying to figure out how to check if a file exists on a web server
 using curl, here's an article that may help:
 https://matthewsetter.com/check-if-file-is-available-with-curl/
 
-Below is a code snippet that outputs 'ok' if a particular webpage exists on
-langara.ca using the technique described in the above article
+Below is a code snippet that outputs 'ok' if a particular url exists on
+using the technique described in the above article
 
 ```
-CODE=$(curl -o /dev/null --silent -Iw '%{http_code}' https://langara.ca/programs-and-courses/index.html)
+CODE=$(curl -o /dev/null --silent -Iw '%{http_code}' https://www.capilanou.ca/favicon.ico)
 if [[ $CODE == '200' ]]
 then
     echo 'ok'
