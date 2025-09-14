@@ -122,7 +122,7 @@ file.
 
 # Notes
 
-1. Use the -P option of grep if you want to use the standard regex that you learned last week.
+1. Use the -P option of grep if you want to use the standard regex (you will learn this soon).
 i.e.
 
 ![grep -P](images/image6.png)
