@@ -12,9 +12,10 @@ Let's say I want to output all the jpg images from the Capilano University websi
 use the following one-liner with a combination of curl and grep, as follows:
 
 ```
-# Download the homepage HTML (-s for silent), extract all .jpg image paths with grep, and sort them uniquely
 curl -s https://www.capilanou.ca | grep -o -E '/media.*jpg' | sort -u
 ```
+
+NOTE: the above one-liner downloads the homepage HTML (-s for silent), extract all .jpg image paths with grep, and sort them uniquely
 
 Below is the sample output from the shell:
 
