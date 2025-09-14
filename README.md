@@ -1,6 +1,6 @@
 # Linux Bash Scripting
 
-Watch Chapter 2 and 3: https://www.linkedin.com/learning/learning-bash-scripting-17063287 
+Watch Chapter 2 and 3: https://www.linkedin.com/learning/learning-bash-scripting-26210777 
 
 Let’s say if I want to download all the images from the langara website that we retrieved
 from the previous section, we can run the wget command  on every file above, like this: 
